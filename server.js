@@ -15,13 +15,16 @@ const jsxEngine = require('jsx-view-engine')
 app.set('view engine', 'jsx');
 app.engine('jsx', jsxEngine());
 
+const logRoutes = require('./routes/logRoutes')
+
 app.use(express.urlencoded({extended:false}))
 
 app.use(methodOverride('_method'))
+app.use('/logs',logRoutes)
 
 
 app.get('/' , (req,res) => {
-    res.send('test')
+    res.send('<h1><a href="/logs">Go to  Captain logs</a></h1>')
 })
 
 app.listen(PORT, () => {

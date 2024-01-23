@@ -5,6 +5,7 @@ const logIndex = async (req, res) => {
 
     try {
         data = await Log.find()
+        console.log('data', data)
     } catch (err) {
         console.log('data error', err)
     }
