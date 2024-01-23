@@ -1,13 +1,11 @@
 const express = require ('express')
+const mongoConfig = require ('./config')
+
 const app = express()
 
 const PORT = 3000
 
-
-
-
 const jsxEngine = require('jsx-view-engine')
-
 app.set('view engine', 'jsx');
 app.engine('jsx', jsxEngine());
 
@@ -23,4 +21,5 @@ app.post('/logs', (req, res) => {
 
 app.listen(PORT, () => {
     console.log('Listening on port: ' + PORT, process.env.MONGO_URL)
+    mongoconfig()
 })
