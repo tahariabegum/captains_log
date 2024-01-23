@@ -1,6 +1,10 @@
 const express = require ('express')
 const app = express()
 
+const PORT = 3000
+
+
+
 
 const jsxEngine = require('jsx-view-engine')
 
@@ -13,6 +17,10 @@ app.get('/logs/new', (req, res) => {
     res.render('New')
 })
 
-app.listen(3000, () => {
-    console.log('Listening on port 3000')
+app.post('/logs', (req, res) => {
+    res.send("received")
+})
+
+app.listen(PORT, () => {
+    console.log('Listening on port: ' + PORT, process.env.MONGO_URL)
 })
