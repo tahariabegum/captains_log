@@ -29,11 +29,6 @@ const logIndex = async (req, res) => {
     res.render('Index', {logs:data})
 }
 
-
-app.get('/logs/new', (req, res) => {
-    res.render('New')
-})
-
 const logCreate = async (req, res) => {
     console.log (req.body)
     if (req.body.shipIsBroken === 'on') {
@@ -50,7 +45,19 @@ const logCreate = async (req, res) => {
     res.redirect('/logs')
 }
 
+app.get('/logs/new', (req, res) => {
+    res.render('New')
+})
+
+const logShow = async (req, res) => {
+    const data = await Log.findById(req.params.id)
+    res.render('Show', {logs:data})
+}
+
+
 app.listen(PORT, () => {
     console.log('Listening on port: ' + PORT, process.env.MONGO_URL)
     mongoConfig()
 })
+
+module.exports = {logIndex, logCreate } 
