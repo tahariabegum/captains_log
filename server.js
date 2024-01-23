@@ -1,4 +1,5 @@
 const express = require ('express')
+const Log = require ('./models/Log')
 
 require ('dotenv').config()
 const mongoConfig = require ('./config')
@@ -17,18 +18,37 @@ app.get('/' , (req,res) => {
     res.send('test')
 })
 
+const logIndex = async (req, res) => {
+    let data ; 
+
+    try {
+        data = await Log.find()
+    } catch (err) {
+        console.log('data error', err)
+    }
+    res.render('Index', {logs:data})
+}
+
+
 app.get('/logs/new', (req, res) => {
     res.render('New')
 })
 
-app.post('/logs', (req, res) => {
-    res.send(req.body)
+const logCreate = async (req, res) => {
+    console.log (req.body)
     if (req.body.shipIsBroken === 'on') {
         req.body.shipIsBroken = true
     } else {
         req.body.shipIsBroken = false
     }
-})
+    try {
+        const result = await Log.create(req.body)
+    } catch (err) {
+        console.log('data error', err )
+    }
+    Log.push(req.body)
+    res.redirect('/logs')
+}
 
 app.listen(PORT, () => {
     console.log('Listening on port: ' + PORT, process.env.MONGO_URL)
